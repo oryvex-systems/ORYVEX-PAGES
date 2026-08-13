@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#05070b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>ORYVEX — Core V0.2</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><span class="x"></span>ORYVEX</div>
+    <nav>
+      <a class="nav" href="#merkez">Ana Merkez</a>
+      <a class="nav" href="#sistemler">Sistemler</a>
+      <a class="nav" href="#gorevler">Görevler</a>
+      <a class="nav" href="#ai">AI Core</a>
+    </nav>
+    <div class="userbar hidden" id="userbar"><span class="user-email" id="user-email"></span><button class="ghost" id="logout">Çıkış</button></div>
+    <button class="ghost" id="login-open">Giriş Yap</button>
+  </header>
+
+  <section class="auth-panel hidden" id="auth-panel">
+    <div class="eyebrow">ORYVEX KİMLİK</div>
+    <h2>Yönetici Girişi</h2>
+    <p class="muted">Yetkili çalışma alanlarını ve canlı görevleri görmek için giriş yapın.</p>
+    <form id="login-form">
+      <label class="field">E-posta<input id="email" type="email" autocomplete="email" required></label>
+      <label class="field">Şifre<input id="password" type="password" autocomplete="current-password" required></label>
+      <button class="btn primary" style="width:100%" type="submit">ORYVEX’e Giriş Yap</button>
+    </form>
+    <div id="auth-message" class="notice hidden" style="margin-top:12px"></div>
+  </section>
+
+  <main id="public-view">
+    <section class="hero" id="merkez">
+      <div>
+        <div class="eyebrow">ORYVEX CORE · V0.2</div>
+        <h1>TEK <span>ÇEKİRDEK.</span><br>ÇOK SİSTEM.</h1>
+        <p>ORYVEX; markaları, yazılımları ve operasyonları tek merkezde buluşturan ana işletim katmanıdır. Bu sürümde sistem geçidi canlı, yönetici girişi aktif ve TIKLADOY ile BURGERMY doğrudan erişilebilir.</p>
+        <div class="actions"><a class="btn primary" href="#sistemler">Sistemleri Aç</a><button class="btn" onclick="document.getElementById('login-open').click()">Yönetici Girişi</button></div>
+      </div>
+      <div class="core"><div class="line l1"></div><div class="line l2"></div><div class="line l3"></div><div class="line l4"></div><i class="dot d1"></i><i class="dot d2"></i><i class="dot d3"></i><i class="dot d4"></i><div class="chip">X</div></div>
+    </section>
+
+    <section class="section"><h2>Ana Merkez</h2><p class="muted">ORYVEX’in ilk çalışan sistem geçidi.</p><div class="grid"><article class="card"><span class="tag">CANLI</span><h3>Aktif Sistem</h3><div class="metric">2</div><p class="muted">TIKLADOY ve BURGERMY</p></article><article class="card"><span class="tag">ROADMAP</span><h3>Geliştirilen Sistem</h3><div class="metric">4</div><p class="muted">WOODLIFE, TEKNOM YAPI, DOME LIGHTING, KAYNAŞALIM</p></article><article class="card"><span class="tag">CORE</span><h3>Ortak Çekirdek</h3><div class="metric">1</div><p class="muted">Kimlik, görev ve çalışma alanı altyapısı</p></article></div></section>
+
+    <section class="section" id="sistemler"><h2>Sistemler</h2><p class="muted">Aktif sistemlere dokunarak doğrudan geçiş yapabilirsiniz.</p><div class="systems" id="public-systems"></div></section>
+
+    <section class="section" id="ai"><h2>ORYVEX AI Core</h2><p class="muted">Veri, yapay zekâ, insan ve otomasyonun tek çekirdekte birleştiği katman.</p><div class="card" style="min-height:220px;display:flex;align-items:center;justify-content:center;text-align:center"><div><div class="gradient" style="font-size:52px;font-weight:1000">X</div><h3>Veri · Yapay Zekâ · İnsan · Otomasyon</h3><p class="muted">Giriş yaptıktan sonra canlı sistem ve görev özeti görüntülenir.</p></div></div></section>
+  </main>
+
+  <main id="private-view" class="hidden">
+    <section class="hero" id="panel"><div><div class="eyebrow">ORYVEX YÖNETİM MERKEZİ</div><h1>HOŞ GELDİN,<br><span id="welcome-name">Kullanıcı</span></h1><p>Yetkili olduğunuz çalışma alanları ve görevler Supabase’den canlı olarak yükleniyor.</p></div><div class="core"><div class="line l1"></div><div class="line l2"></div><div class="line l3"></div><div class="line l4"></div><div class="chip">X</div></div></section>
+
+    <section class="section dashboard"><h2>Canlı Özet</h2><div class="grid"><article class="card"><span class="tag">AKTİF</span><h3>Aktif Sistem</h3><div class="metric" id="metric-active">0</div></article><article class="card"><span class="tag">SİSTEM</span><h3>Toplam Sistem</h3><div class="metric" id="metric-systems">0</div></article><article class="card"><span class="tag">GÖREV</span><h3>Bekleyen Görev</h3><div class="metric" id="metric-tasks">0</div></article></div></section>
+
+    <section class="section" id="sistemler-live"><h2>Çalışma Alanları</h2><p class="muted">Hesabınıza atanmış ORYVEX sistemleri.</p><div class="systems" id="live-systems"></div></section>
+
+    <section class="section" id="gorevler"><h2>Görev Merkezi</h2><p class="muted">Canlı Supabase görev akışı.</p><div class="task-list" id="live-tasks"></div></section>
+
+    <section class="section" id="ai-live"><h2>ORYVEX AI Core</h2><div class="card"><span class="tag">CANLI ÖZET</span><h3 style="margin-top:14px">Sistem Durumu</h3><p class="muted" id="ai-summary">Veriler yükleniyor...</p></div></section>
+  </main>
+
+  <footer class="foot"><span class="pulse"></span>ORYVEX Core V0.2 · revakhali.tr test ortamı</footer>
+</div>
+<script type="module" src="/app.js"></script>
+</body>
+</html>
