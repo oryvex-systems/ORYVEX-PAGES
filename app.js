@@ -6,7 +6,7 @@ const supabase = createClient(
 );
 
 const $ = (id) => document.getElementById(id);
-const state = { user: null, systems: [], tasks: [] };
+const state = { user: null, systems: [], tasks: [], contacts: [] };
 
 function safe(value='') {
   return String(value).replace(/[&<>'\"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));
@@ -14,6 +14,7 @@ function safe(value='') {
 
 function setMessage(id, message, type='') {
   const el = $(id);
+  if (!el) return;
   el.textContent = message;
   el.className = `notice ${type}`;
   el.classList.toggle('hidden', !message);
@@ -42,7 +43,19 @@ function renderPublicSystems() {
 }
 
 function renderWorkspaceOptions() {
+  if (!$('task-workspace')) return;
   $('task-workspace').innerHTML = state.systems.map(system => `<option value="${system.id}">${safe(system.name)}</option>`).join('');
+}
+
+function renderContacts() {
+  const el = $('live-contacts');
+  if (!el) return;
+  el.innerHTML = state.contacts.map(contact => `
+    <article class="task contact-item">
+      <div class="task-top"><strong>${safe(contact.full_name)}</strong><span class="tag">${contact.status === 'new' ? 'YENİ' : safe(contact.status)}</span></div>
+      <div class="contact-meta"><span>☎ ${safe(contact.phone)}</span><span>✉ ${safe(contact.email)}</span><span>${new Date(contact.created_at).toLocaleString('tr-TR')}</span></div>
+      <div class="contact-note">${safe(contact.note)}</div>
+    </article>`).join('') || '<div class="notice">Henüz müşteri talebi yok.</div>';
 }
 
 function renderPrivate() {
@@ -69,21 +82,25 @@ function renderPrivate() {
     </article>`).join('') || '<div class="notice">Görev bulunamadı.</div>';
 
   renderWorkspaceOptions();
+  renderContacts();
   const displayName = state.user?.user_metadata?.full_name || state.user?.email?.split('@')[0] || 'Kullanıcı';
   $('welcome-name').textContent = displayName;
   $('user-email').textContent = state.user?.email || '';
-  $('ai-summary').innerHTML = `Şu anda <strong>${active} aktif sistem</strong> ve <strong>${pending} bekleyen görev</strong> bulunuyor. ORYVEX çekirdeği Supabase ile canlı bağlı.`;
+  $('ai-summary').innerHTML = `Şu anda <strong>${active} aktif sistem</strong>, <strong>${pending} bekleyen görev</strong> ve <strong>${state.contacts.filter(c => c.status === 'new').length} yeni müşteri talebi</strong> bulunuyor.`;
 }
 
 async function loadPrivateData() {
-  const [{ data: systems, error: systemsError }, { data: tasks, error: tasksError }] = await Promise.all([
+  const [systemsRes, tasksRes, contactsRes] = await Promise.all([
     supabase.from('oryvex_workspaces').select('id,slug,name,description,status,app_url,updated_at').order('name'),
-    supabase.from('oryvex_tasks').select('id,title,status,priority,due_date,workspace_id,oryvex_workspaces(name)').order('due_date', { ascending: true, nullsFirst: false })
+    supabase.from('oryvex_tasks').select('id,title,status,priority,due_date,workspace_id,oryvex_workspaces(name)').order('due_date', { ascending: true, nullsFirst: false }),
+    supabase.from('oryvex_contact_requests').select('id,full_name,phone,email,note,status,created_at').order('created_at', { ascending: false }).limit(30)
   ]);
-  if (systemsError) console.error(systemsError);
-  if (tasksError) console.error(tasksError);
-  state.systems = systems || [];
-  state.tasks = tasks || [];
+  if (systemsRes.error) console.error(systemsRes.error);
+  if (tasksRes.error) console.error(tasksRes.error);
+  if (contactsRes.error) console.error(contactsRes.error);
+  state.systems = systemsRes.data || [];
+  state.tasks = tasksRes.data || [];
+  state.contacts = contactsRes.data || [];
   renderPrivate();
 }
 
@@ -92,15 +109,19 @@ function applySession(user) {
   const signedIn = Boolean(user);
   $('public-view').classList.toggle('hidden', signedIn);
   $('private-view').classList.toggle('hidden', !signedIn);
-  $('login-open').classList.toggle('hidden', signedIn);
   $('userbar').classList.toggle('hidden', !signedIn);
+  $('auth-panel').classList.add('hidden');
   if (signedIn) loadPrivateData();
 }
 
-$('login-open').addEventListener('click', () => {
-  $('auth-panel').classList.toggle('hidden');
-  $('email').focus();
-});
+function openAdminIfRequested() {
+  if (window.location.hash === '#yonetim' && !state.user) {
+    $('auth-panel').classList.remove('hidden');
+    setTimeout(() => $('email').focus(), 50);
+  }
+}
+
+window.addEventListener('hashchange', openAdminIfRequested);
 
 $('login-form').addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -109,15 +130,34 @@ $('login-form').addEventListener('submit', async (event) => {
   const password = $('password').value;
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) return setMessage('auth-message','Giriş başarısız. E-posta veya şifreyi kontrol edin.','error');
+  if (data.user?.email !== 'ofrkcaliskan@gmail.com') {
+    await supabase.auth.signOut();
+    return setMessage('auth-message','Bu hesap ORYVEX yönetimine yetkili değil.','error');
+  }
   setMessage('auth-message','Giriş başarılı.','success');
+  history.replaceState(null,'',window.location.pathname);
   applySession(data.user);
-  $('auth-panel').classList.add('hidden');
 });
 
 $('logout').addEventListener('click', async () => {
   await supabase.auth.signOut();
   applySession(null);
   window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+$('contact-form').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  setMessage('contact-message','Mesajınız gönderiliyor...');
+  const payload = {
+    full_name: $('contact-name').value.trim(),
+    phone: $('contact-phone').value.trim(),
+    email: $('contact-email').value.trim(),
+    note: $('contact-note').value.trim()
+  };
+  const { error } = await supabase.from('oryvex_contact_requests').insert(payload);
+  if (error) return setMessage('contact-message','Mesaj gönderilemedi. Lütfen bilgileri kontrol edip tekrar deneyin.','error');
+  $('contact-form').reset();
+  setMessage('contact-message','Teşekkür ederiz. Mesajınız ORYVEX ekibine ulaştı.','success');
 });
 
 $('task-open').addEventListener('click', () => {
@@ -135,14 +175,7 @@ $('task-form').addEventListener('submit', async (event) => {
   const title = $('task-title').value.trim();
   if (!workspace_id || !title) return setMessage('task-message','Sistem ve görev başlığı zorunludur.','error');
   setMessage('task-message','Görev kaydediliyor...');
-  const payload = {
-    workspace_id,
-    title,
-    priority: $('task-priority').value,
-    due_date: $('task-due').value || null,
-    status: 'todo',
-    created_by: state.user.id
-  };
+  const payload = { workspace_id, title, priority: $('task-priority').value, due_date: $('task-due').value || null, status: 'todo', created_by: state.user.id };
   const { error } = await supabase.from('oryvex_tasks').insert(payload);
   if (error) return setMessage('task-message','Görev kaydedilemedi: ' + error.message,'error');
   setMessage('task-message','Görev kaydedildi.','success');
@@ -154,5 +187,11 @@ $('task-form').addEventListener('submit', async (event) => {
 
 renderPublicSystems();
 const { data: { session } } = await supabase.auth.getSession();
-applySession(session?.user || null);
-supabase.auth.onAuthStateChange((_event, sessionData) => applySession(sessionData?.user || null));
+const initialUser = session?.user?.email === 'ofrkcaliskan@gmail.com' ? session.user : null;
+if (session?.user && !initialUser) await supabase.auth.signOut();
+applySession(initialUser);
+openAdminIfRequested();
+supabase.auth.onAuthStateChange((_event, sessionData) => {
+  const user = sessionData?.user?.email === 'ofrkcaliskan@gmail.com' ? sessionData.user : null;
+  applySession(user);
+});
