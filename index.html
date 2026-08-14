@@ -60,7 +60,20 @@
 
     <section class="section" id="sistemler-live"><h2>Çalışma Alanları</h2><p class="muted">Hesabınıza atanmış ORYVEX sistemleri.</p><div class="systems" id="live-systems"></div></section>
 
-    <section class="section" id="gorevler"><h2>Görev Merkezi</h2><p class="muted">Canlı Supabase görev akışı.</p><div class="task-list" id="live-tasks"></div></section>
+    <section class="section" id="gorevler">
+      <div class="section-head"><div><h2>Görev Merkezi</h2><p class="muted">Canlı Supabase görev akışı.</p></div><button class="btn primary" id="task-open">+ Yeni Görev</button></div>
+      <form id="task-form" class="card task-form hidden">
+        <div class="form-grid">
+          <label class="field">Sistem<select id="task-workspace" required></select></label>
+          <label class="field">Görev Başlığı<input id="task-title" required maxlength="120" placeholder="Örn. mobil testleri tamamla"></label>
+          <label class="field">Öncelik<select id="task-priority"><option value="low">Düşük</option><option value="medium" selected>Orta</option><option value="high">Yüksek</option><option value="critical">Kritik</option></select></label>
+          <label class="field">Bitiş Tarihi<input id="task-due" type="date"></label>
+        </div>
+        <div class="actions"><button class="btn primary" type="submit">Görevi Kaydet</button><button class="btn" type="button" id="task-cancel">Vazgeç</button></div>
+        <div id="task-message" class="notice hidden" style="margin-top:12px"></div>
+      </form>
+      <div class="task-list" id="live-tasks"></div>
+    </section>
 
     <section class="section" id="ai-live"><h2>ORYVEX AI Core</h2><div class="card"><span class="tag">CANLI ÖZET</span><h3 style="margin-top:14px">Sistem Durumu</h3><p class="muted" id="ai-summary">Veriler yükleniyor...</p></div></section>
   </main>
