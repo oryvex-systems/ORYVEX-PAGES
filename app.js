@@ -12,8 +12,8 @@ function safe(value='') {
   return String(value).replace(/[&<>'\"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));
 }
 
-function setAuthMessage(message, type='') {
-  const el = $('auth-message');
+function setMessage(id, message, type='') {
+  const el = $(id);
   el.textContent = message;
   el.className = `notice ${type}`;
   el.classList.toggle('hidden', !message);
@@ -35,10 +35,14 @@ function renderPublicSystems() {
     ['KAYNAŞALIM','Topluluk platformu','#','PLANLANDI'],
   ];
   $('public-systems').innerHTML = systems.map(([name,desc,href,status]) => `
-    <a class="system" href="${href}">
+    <a class="system" href="${href}" ${href !== '#' ? 'target="_blank" rel="noreferrer"' : ''}>
       <div><b>${name}</b><div class="muted">${desc}</div></div>
       <span class="status ${status==='AKTİF'?'active':'dev'}">${status==='AKTİF'?'● ':''}${status}</span>
     </a>`).join('');
+}
+
+function renderWorkspaceOptions() {
+  $('task-workspace').innerHTML = state.systems.map(system => `<option value="${system.id}">${safe(system.name)}</option>`).join('');
 }
 
 function renderPrivate() {
@@ -53,7 +57,7 @@ function renderPrivate() {
     const canOpen = href !== '#';
     const label = system.status === 'active' ? 'AKTİF' : system.status === 'development' ? 'GELİŞTİRİLİYOR' : system.status.toUpperCase();
     const inner = `<div><b>${safe(system.name)}</b><div class="muted">${safe(system.description || '')}</div></div><span class="status ${system.status==='active'?'active':'dev'}">${system.status==='active'?'● ':''}${label}</span>`;
-    return canOpen ? `<a class="system" href="${href}">${inner}</a>` : `<div class="system">${inner}</div>`;
+    return canOpen ? `<a class="system" href="${href}" target="_blank" rel="noreferrer">${inner}</a>` : `<div class="system">${inner}</div>`;
   }).join('') || '<div class="notice">Bu hesap için çalışma alanı bulunamadı.</div>';
 
   const statusLabel = {todo:'Yapılacak',in_progress:'Devam Ediyor',done:'Tamamlandı',overdue:'Geciken'};
@@ -64,6 +68,7 @@ function renderPrivate() {
       <div class="muted" style="margin-top:8px">${safe(task.oryvex_workspaces?.name || 'ORYVEX')} · ${statusLabel[task.status] || task.status}${task.due_date ? ` · ${safe(task.due_date)}` : ''}</div>
     </article>`).join('') || '<div class="notice">Görev bulunamadı.</div>';
 
+  renderWorkspaceOptions();
   const displayName = state.user?.user_metadata?.full_name || state.user?.email?.split('@')[0] || 'Kullanıcı';
   $('welcome-name').textContent = displayName;
   $('user-email').textContent = state.user?.email || '';
@@ -99,12 +104,12 @@ $('login-open').addEventListener('click', () => {
 
 $('login-form').addEventListener('submit', async (event) => {
   event.preventDefault();
-  setAuthMessage('Giriş yapılıyor...');
+  setMessage('auth-message','Giriş yapılıyor...');
   const email = $('email').value.trim();
   const password = $('password').value;
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) return setAuthMessage('Giriş başarısız. E-posta veya şifreyi kontrol edin.', 'error');
-  setAuthMessage('Giriş başarılı.', 'success');
+  if (error) return setMessage('auth-message','Giriş başarısız. E-posta veya şifreyi kontrol edin.','error');
+  setMessage('auth-message','Giriş başarılı.','success');
   applySession(data.user);
   $('auth-panel').classList.add('hidden');
 });
@@ -113,6 +118,38 @@ $('logout').addEventListener('click', async () => {
   await supabase.auth.signOut();
   applySession(null);
   window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+$('task-open').addEventListener('click', () => {
+  $('task-form').classList.remove('hidden');
+  $('task-title').focus();
+});
+$('task-cancel').addEventListener('click', () => {
+  $('task-form').classList.add('hidden');
+  setMessage('task-message','');
+});
+$('task-form').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  if (!state.user) return;
+  const workspace_id = $('task-workspace').value;
+  const title = $('task-title').value.trim();
+  if (!workspace_id || !title) return setMessage('task-message','Sistem ve görev başlığı zorunludur.','error');
+  setMessage('task-message','Görev kaydediliyor...');
+  const payload = {
+    workspace_id,
+    title,
+    priority: $('task-priority').value,
+    due_date: $('task-due').value || null,
+    status: 'todo',
+    created_by: state.user.id
+  };
+  const { error } = await supabase.from('oryvex_tasks').insert(payload);
+  if (error) return setMessage('task-message','Görev kaydedilemedi: ' + error.message,'error');
+  setMessage('task-message','Görev kaydedildi.','success');
+  $('task-title').value = '';
+  $('task-due').value = '';
+  await loadPrivateData();
+  setTimeout(() => $('task-form').classList.add('hidden'), 500);
 });
 
 renderPublicSystems();
