@@ -1,0 +1,8 @@
+{
+  "name": "teknom-yapi-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "check": "node scripts/check.mjs"
+  }
+}
