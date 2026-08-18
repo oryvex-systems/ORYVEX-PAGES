@@ -1,0 +1,27 @@
+name: TEKNOM Publish Check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'teknom-yapi/**'
+      - '.github/workflows/teknom-publish-check.yml'
+  pull_request:
+    paths:
+      - 'teknom-yapi/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: teknom-yapi
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate publish package
+        run: npm run check
