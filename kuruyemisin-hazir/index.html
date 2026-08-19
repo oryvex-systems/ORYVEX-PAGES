@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kuruyemişin Hazır</title>
+  <meta name="description" content="Sipariş ver, hazırlanmış paketini beklemeden al." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="nut">🥜</span><strong>KURUYEMİŞİN HAZIR</strong></div>
+    <button class="ghost" id="locationBtn">📍 Konumum</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">BEKLEMEDEN TESLİM</p>
+        <h1>Kuruyemişin hazır.<br/>Sen sadece gel ve al.</h1>
+        <p>Siparişini oluştur, ödeme adımına geç, paket hazır olduğunda QR kodunla teslim al.</p>
+        <button class="primary" data-go="products">Sipariş Oluştur</button>
+      </div>
+      <div class="hero-card">🥜<br><span>Taze • Hızlı • Hazır</span></div>
+    </section>
+
+    <section class="quick-grid">
+      <button class="quick" data-go="delivery">📍<b>Konumdan Al</b><small>Mağazada bekleme yok</small></button>
+      <button class="quick" data-go="delivery">🛵<b>Kurye ile Gelsin</b><small>Kapına teslim</small></button>
+      <button class="quick" data-go="products">🥜<b>Kendi Karışımını Yap</b><small>Gramajı sen belirle</small></button>
+      <button class="quick" data-go="delivery">🎁<b>Hediye Paketi</b><small>Notunu da ekle</small></button>
+    </section>
+
+    <section id="products" class="panel">
+      <div class="section-head"><div><p class="eyebrow">1. ADIM</p><h2>Ürününü seç</h2></div><span id="cartCount">0 ürün</span></div>
+      <div class="products" id="productList"></div>
+      <button class="primary full" data-go="delivery">Teslimat Seçeneklerine Geç</button>
+    </section>
+
+    <section id="delivery" class="panel">
+      <div class="section-head"><div><p class="eyebrow">2. ADIM</p><h2>Teslimat ve paket</h2></div></div>
+      <div class="options">
+        <label><input type="radio" name="delivery" value="Mağazadan Al" checked> Mağazadan Al</label>
+        <label><input type="radio" name="delivery" value="Kurye ile Gelsin"> Kurye ile Gelsin</label>
+      </div>
+      <label class="field">Hazırlanma zamanı
+        <select id="timeSelect"><option>Hemen hazırla</option><option>Bugün 18:00</option><option>Yarın 10:00</option></select>
+      </label>
+      <label class="switch"><input type="checkbox" id="gift"> 🎁 Hediye paketi (+25 ₺)</label>
+      <label class="field">Hediye notu<textarea id="giftNote" placeholder="Afiyet olsun..."></textarea></label>
+      <button class="primary full" data-go="summary">Sipariş Özetine Geç</button>
+    </section>
+
+    <section id="summary" class="panel">
+      <div class="section-head"><div><p class="eyebrow">3. ADIM</p><h2>Sipariş Özeti</h2></div></div>
+      <div id="summaryItems" class="summary-items"></div>
+      <div class="total"><span>Toplam</span><strong id="total">0 ₺</strong></div>
+      <button class="primary full" id="payBtn">Ödeme ve Siparişi Onayla</button>
+      <p class="fine">Demo sürümünde gerçek ödeme alınmaz. Ödeme sağlayıcısı sonraki entegrasyon aşamasında bağlanacaktır.</p>
+    </section>
+
+    <section id="success" class="panel success hidden">
+      <div class="check">✓</div>
+      <h2>Siparişin alındı!</h2>
+      <p id="orderNo"></p>
+      <div class="qr">▦</div>
+      <p>Paketin hazır olduğunda bildirim alacaksın. Mağazada bu kodu gösterip beklemeden teslim al.</p>
+      <button class="primary" onclick="location.reload()">Yeni Sipariş</button>
+    </section>
+  </main>
+
+  <footer>ORYVEX • Kuruyemişin Hazır MVP</footer>
+  <script src="./app.js"></script>
+</body>
+</html>
