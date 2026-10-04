@@ -1,86 +1,489 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#05070b">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>ORYVEX — İşletim Sistemi</title>
-  <link rel="stylesheet" href="/styles.css">
+  <meta name="theme-color" content="#030b19">
+  <meta name="description" content="ORYVEX Dijital Systems — işletmeler için yazılım, otomasyon, yapay zekâ, entegrasyon ve operasyon yönetim sistemleri.">
+  <meta property="og:title" content="ORYVEX Dijital Systems">
+  <meta property="og:description" content="İşinizi daha akıllı yönetin. Güçlü dijital sistemler, otomasyon ve entegrasyon çözümleri.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oryvex.com.tr">
+  <title>ORYVEX | Dijital Systems</title>
+  <link rel="canonical" href="https://oryvex.com.tr/">
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-<div class="wrap">
-  <header class="top">
-    <div class="brand"><span class="x"></span>ORYVEX</div>
-    <nav>
-      <a class="nav" href="#merkez">Ana Merkez</a>
-      <a class="nav" href="#sistemler">Sistemler</a>
-      <a class="nav" href="#iletisim">Bize Ulaş</a>
+
+<div class="ambient ambient-one"></div>
+<div class="ambient ambient-two"></div>
+
+<header class="site-header" id="top">
+  <div class="container nav-wrap">
+
+    <a class="brand" href="#top" aria-label="ORYVEX ana sayfa">
+      <span class="brand-mark">X</span>
+      <span class="brand-word">ORYVE<span>X</span></span>
+      <span class="brand-line"></span>
+      <span class="brand-sub">DIJITAL SYSTEMS</span>
+    </a>
+
+    <button class="menu-button" id="menuButton" aria-label="Menüyü aç" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav" id="mainNav">
+      <a href="#top" class="active">Ana Sayfa</a>
+      <a href="#solutions">Çözümler</a>
+      <a href="#systems">Sistemler</a>
+      <a href="#sectors">Sektörler</a>
+      <a href="#core">ORYVEX CORE</a>
+      <a href="#about">Hakkımızda</a>
+      <a href="#contact">İletişim</a>
     </nav>
-    <div class="userbar hidden" id="userbar"><span class="user-email" id="user-email"></span><button class="ghost" id="logout">Çıkış</button></div>
-  </header>
 
-  <section class="auth-panel hidden" id="auth-panel">
-    <div class="eyebrow">ORYVEX ÖZEL YÖNETİM</div>
-    <h2>Yönetici Girişi</h2>
-    <p class="muted">Bu alan ORYVEX yönetimi içindir.</p>
-    <form id="login-form">
-      <label class="field">E-posta<input id="email" type="email" autocomplete="email" required></label>
-      <label class="field">Şifre<input id="password" type="password" autocomplete="current-password" required></label>
-      <button class="btn primary" style="width:100%" type="submit">Yönetim Merkezine Gir</button>
-    </form>
-    <div id="auth-message" class="notice hidden" style="margin-top:12px"></div>
-  </section>
+    <a class="domain-pill" href="https://oryvex.com.tr">
+      oryvex.com.tr <span>↗</span>
+    </a>
 
-  <main id="public-view">
-    <section class="hero" id="merkez">
+  </div>
+</header>
+
+<main>
+
+<section class="hero section">
+  <div class="container hero-grid">
+
+    <div class="hero-copy reveal">
+
+      <div class="eyebrow">
+        <span class="pulse"></span>
+        İŞİNİZİ DAHA AKILLI YÖNETİN
+      </div>
+
+      <h1>
+        Dijital Dönüşümde
+        <span>Güçlü Çözümler</span>
+      </h1>
+
+      <p class="hero-text">
+        ORYVEX Dijital Systems; işletmeler için modern, güvenilir ve
+        ölçeklenebilir dijital çözümler geliştirir. Operasyonlarınızı
+        kolaylaştırın, verimliliğinizi artırın ve tüm sistemlerinizi
+        tek bir dijital mimaride yönetin.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#systems">
+          Sistemlerimizi Keşfedin <span>→</span>
+        </a>
+
+        <a class="btn btn-secondary" href="#contact">
+          Bize Ulaşın
+        </a>
+      </div>
+
+      <div class="hero-metrics">
+
+        <div>
+          <strong>CORE</strong>
+          <span>Merkezi Yönetim</span>
+        </div>
+
+        <div>
+          <strong>AI</strong>
+          <span>Akıllı Otomasyon</span>
+        </div>
+
+        <div>
+          <strong>API</strong>
+          <span>Sistem Entegrasyonu</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="hero-visual reveal">
+
+      <div class="orbit orbit-a"></div>
+      <div class="orbit orbit-b"></div>
+      <div class="orbit orbit-c"></div>
+
+      <div class="core-glow"></div>
+
+      <div class="x-emblem">
+        <span class="x-left"></span>
+        <span class="x-right"></span>
+        <i></i>
+      </div>
+
+      <div class="live-chip">
+        <span class="pulse"></span>
+        ORYVEX NETWORK
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container feature-strip">
+
+    <article>
+      <div class="feature-icon">▥</div>
       <div>
-        <div class="eyebrow">ORYVEX · BUSINESS OPERATING SYSTEM</div>
-        <h1>TEK <span>ÇEKİRDEK.</span><br>ÇOK SİSTEM.</h1>
-        <p>ORYVEX; markaları, yazılımları, yapay zekâ araçlarını ve iş süreçlerini tek merkezde birleştiren işletim sistemidir.</p>
-        <div class="actions"><a class="btn primary" href="#iletisim">Bize Ulaş</a><a class="btn" href="#sistemler">Sistemleri İncele</a></div>
+        <strong>Verimlilik</strong>
+        <span>Daha akıllı süreçler</span>
       </div>
-      <div class="core"><div class="line l1"></div><div class="line l2"></div><div class="line l3"></div><div class="line l4"></div><i class="dot d1"></i><i class="dot d2"></i><i class="dot d3"></i><i class="dot d4"></i><div class="chip">X</div></div>
-    </section>
+    </article>
 
-    <section class="section"><h2>ORYVEX Nedir?</h2><p class="muted">Tek merkezden yönetilen, büyüdükçe yeni sistemlerin bağlandığı dijital işletim altyapısı.</p><div class="grid"><article class="card"><span class="tag">VERİ</span><h3>Tek Merkez</h3><p class="muted">Farklı işlerin ve markaların verisini ortak çekirdekte toplar.</p></article><article class="card"><span class="tag">YAPAY ZEKÂ</span><h3>Akıllı Kararlar</h3><p class="muted">Analiz, özet ve aksiyon önerileriyle yönetimi hızlandırır.</p></article><article class="card"><span class="tag">OTOMASYON</span><h3>Bağlı Sistemler</h3><p class="muted">Her yeni uygulama ORYVEX çatısına eklenerek ekosistemi büyütür.</p></article></div></section>
-
-    <section class="section" id="sistemler"><h2>Sistemler</h2><p class="muted">ORYVEX çatısı altında geliştirilen ürün ve platformlar.</p><div class="systems" id="public-systems"></div></section>
-
-    <section class="section" id="iletisim">
-      <div class="contact-shell">
-        <div class="contact-copy"><div class="eyebrow">BİZE ULAŞ</div><h2>Bir fikriniz veya ihtiyacınız mı var?</h2><p class="muted">Bilgilerinizi ve iletmek istediğiniz notu bırakın. ORYVEX ekibi sizinle iletişime geçsin.</p></div>
-        <form id="contact-form" class="card contact-form">
-          <div class="form-grid">
-            <label class="field">Ad Soyad<input id="contact-name" required maxlength="120" placeholder="Adınız Soyadınız"></label>
-            <label class="field">Telefon<input id="contact-phone" type="tel" required maxlength="40" placeholder="05xx xxx xx xx"></label>
-            <label class="field">E-posta<input id="contact-email" type="email" required maxlength="160" placeholder="ornek@email.com"></label>
-            <label class="field full">İletmek İstediğiniz Not<textarea id="contact-note" required maxlength="2000" rows="5" placeholder="Bize kısaca ne yapmak istediğinizi anlatın..."></textarea></label>
-          </div>
-          <button class="btn primary" type="submit">Mesajımı Gönder</button>
-          <div id="contact-message" class="notice hidden" style="margin-top:12px"></div>
-        </form>
+    <article>
+      <div class="feature-icon">⚙</div>
+      <div>
+        <strong>Entegrasyon</strong>
+        <span>Sistemler arası bağlantı</span>
       </div>
-    </section>
-  </main>
+    </article>
 
-  <main id="private-view" class="hidden">
-    <section class="hero" id="panel"><div><div class="eyebrow">ORYVEX YÖNETİM MERKEZİ</div><h1>HOŞ GELDİN,<br><span id="welcome-name">Kullanıcı</span></h1><p>Yetkili çalışma alanları, görevler ve müşteri talepleri tek merkezde.</p></div><div class="core"><div class="line l1"></div><div class="line l2"></div><div class="line l3"></div><div class="line l4"></div><div class="chip">X</div></div></section>
+    <article>
+      <div class="feature-icon">◇</div>
+      <div>
+        <strong>Güvenlik</strong>
+        <span>Kontrollü altyapı</span>
+      </div>
+    </article>
 
-    <section class="section dashboard"><h2>Canlı Özet</h2><div class="grid"><article class="card"><span class="tag">AKTİF</span><h3>Aktif Sistem</h3><div class="metric" id="metric-active">0</div></article><article class="card"><span class="tag">SİSTEM</span><h3>Toplam Sistem</h3><div class="metric" id="metric-systems">0</div></article><article class="card"><span class="tag">GÖREV</span><h3>Bekleyen Görev</h3><div class="metric" id="metric-tasks">0</div></article></div></section>
+    <article>
+      <div class="feature-icon">◎</div>
+      <div>
+        <strong>Destek</strong>
+        <span>Sürekli operasyon</span>
+      </div>
+    </article>
 
-    <section class="section" id="sistemler-live"><h2>Çalışma Alanları</h2><p class="muted">Hesabınıza atanmış ORYVEX sistemleri.</p><div class="systems" id="live-systems"></div></section>
+  </div>
+</section>
 
-    <section class="section" id="gorevler"><div class="section-head"><div><h2>Görev Merkezi</h2><p class="muted">Canlı görev akışı.</p></div><button class="btn primary" id="task-open">+ Yeni Görev</button></div><form id="task-form" class="card task-form hidden"><div class="form-grid"><label class="field">Sistem<select id="task-workspace" required></select></label><label class="field">Görev Başlığı<input id="task-title" required maxlength="120" placeholder="Örn. mobil testleri tamamla"></label><label class="field">Öncelik<select id="task-priority"><option value="low">Düşük</option><option value="medium" selected>Orta</option><option value="high">Yüksek</option><option value="critical">Kritik</option></select></label><label class="field">Bitiş Tarihi<input id="task-due" type="date"></label></div><div class="actions"><button class="btn primary" type="submit">Görevi Kaydet</button><button class="btn" type="button" id="task-cancel">Vazgeç</button></div><div id="task-message" class="notice hidden" style="margin-top:12px"></div></form><div class="task-list" id="live-tasks"></div></section>
+<section class="section section-dark" id="solutions">
 
-    <section class="section" id="talepler"><h2>Müşteri Talepleri</h2><p class="muted">Bize Ulaş formundan gelen son talepler.</p><div class="task-list" id="live-contacts"></div></section>
+  <div class="container">
 
-    <section class="section" id="ai-live"><h2>ORYVEX AI Core</h2><div class="card"><span class="tag">CANLI ÖZET</span><h3 style="margin-top:14px">Sistem Durumu</h3><p class="muted" id="ai-summary">Veriler yükleniyor...</p></div></section>
-  </main>
+    <div class="section-heading reveal">
+      <div class="eyebrow">ORYVEX ÇÖZÜMLERİ</div>
+      <h2>İşletmenizin dijital altyapısını <span>tek yapıda</span> birleştirin.</h2>
+      <p>
+        İhtiyaç duyduğunuz yazılımı yalnız geliştirmiyoruz;
+        operasyon, veri, otomasyon ve entegrasyon katmanlarını
+        birlikte tasarlıyoruz.
+      </p>
+    </div>
 
-  <footer class="foot"><span class="pulse"></span>ORYVEX · Tek Çekirdek. Çok Sistem. <a class="admin-link" href="#yonetim" aria-label="Yönetim">•</a></footer>
-</div>
-<script type="module" src="/app.js"></script>
+    <div class="solution-grid">
+
+      <article class="glass-card reveal">
+        <div class="card-number">01</div>
+        <div class="card-icon">⌘</div>
+        <h3>Operasyon Sistemleri</h3>
+        <p>İş süreçlerinizi dijitalleştiren, takip ve kontrolü tek merkezde toplayan özel sistemler.</p>
+      </article>
+
+      <article class="glass-card reveal">
+        <div class="card-number">02</div>
+        <div class="card-icon">AI</div>
+        <h3>Yapay Zekâ & Otomasyon</h3>
+        <p>Tekrarlanan operasyonları azaltan ve karar süreçlerini destekleyen akıllı iş akışları.</p>
+      </article>
+
+      <article class="glass-card reveal">
+        <div class="card-number">03</div>
+        <div class="card-icon">↔</div>
+        <h3>API & Entegrasyon</h3>
+        <p>Farklı platformların, veri kaynaklarının ve servislerin kontrollü şekilde birlikte çalışması.</p>
+      </article>
+
+      <article class="glass-card reveal">
+        <div class="card-number">04</div>
+        <div class="card-icon">▦</div>
+        <h3>Veri Yönetimi</h3>
+        <p>Operasyon verisinin merkezi, izlenebilir ve ölçeklenebilir bir yapıda yönetilmesi.</p>
+      </article>
+
+      <article class="glass-card reveal">
+        <div class="card-number">05</div>
+        <div class="card-icon">◈</div>
+        <h3>Web & Dijital Platform</h3>
+        <p>Kurumsal web sistemlerinden özel operasyon panellerine kadar uçtan uca dijital ürünler.</p>
+      </article>
+
+      <article class="glass-card reveal">
+        <div class="card-number">06</div>
+        <div class="card-icon">✓</div>
+        <h3>Kontrol & Raporlama</h3>
+        <p>Canlı durum, işlem geçmişi, performans ve yönetim verilerinin tek ekranda görünmesi.</p>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section" id="systems">
+
+  <div class="container">
+
+    <div class="section-heading reveal">
+      <div class="eyebrow">ORYVEX ECOSYSTEM</div>
+      <h2>Fikir değil. <span>Çalışan sistemler.</span></h2>
+      <p>
+        ORYVEX ekosistemindeki dijital ürünler bağımsız çalışabilir,
+        gerektiğinde merkezi altyapıyla entegre olabilir.
+      </p>
+    </div>
+
+    <div class="systems-grid">
+
+      <article class="system-card featured reveal">
+        <div class="system-top">
+          <span class="system-logo">OX</span>
+          <span class="status status-live"><i></i> CORE</span>
+        </div>
+
+        <h3>ORYVEX CORE</h3>
+
+        <p>
+          ORYVEX dijital organizasyonunun merkezi kontrol,
+          koordinasyon ve operasyon altyapısı.
+        </p>
+
+        <div class="tags">
+          <span>Control Plane</span>
+          <span>Automation</span>
+          <span>Security</span>
+          <span>Audit</span>
+        </div>
+
+        <a href="https://core.oryvex.com.tr" target="_blank" rel="noopener">
+          Sistemi Görüntüle →
+        </a>
+      </article>
+
+      <article class="system-card reveal">
+        <div class="system-top">
+          <span class="system-logo">Ş</span>
+          <span class="status status-live"><i></i> AKTİF</span>
+        </div>
+
+        <h3>Şantiye OS</h3>
+
+        <p>
+          İnşaat operasyonlarında beton, demir, iş makinesi,
+          tedarikçi ve saha süreçlerinin dijital yönetimi.
+        </p>
+
+        <div class="tags">
+          <span>Construction</span>
+          <span>Tracking</span>
+          <span>Reports</span>
+        </div>
+      </article>
+
+      <article class="system-card reveal">
+        <div class="system-top">
+          <span class="system-logo">S</span>
+          <span class="status status-pilot"><i></i> PİLOT</span>
+        </div>
+
+        <h3>ORYVEX SYNC</h3>
+
+        <p>
+          Çoklu satış kanallarında ürün, sipariş, stok ve
+          operasyon verisinin senkronizasyon katmanı.
+        </p>
+
+        <div class="tags">
+          <span>Commerce</span>
+          <span>Sync</span>
+          <span>API</span>
+        </div>
+      </article>
+
+      <article class="system-card reveal">
+        <div class="system-top">
+          <span class="system-logo">C</span>
+          <span class="status status-build"><i></i> GELİŞİYOR</span>
+        </div>
+
+        <h3>Cari Takip OS</h3>
+
+        <p>
+          Cari hesap, tahsilat, ödeme, kasa, banka ve hareket
+          yönetimini sade bir operasyon ekranında birleştirir.
+        </p>
+
+        <div class="tags">
+          <span>Finance</span>
+          <span>Operations</span>
+          <span>Ledger</span>
+        </div>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section core-section" id="core">
+
+  <div class="container core-grid">
+
+    <div class="core-copy reveal">
+
+      <div class="eyebrow">MERKEZİ KONTROL KATMANI</div>
+
+      <h2>
+        Bağlan.
+        <span>Ama bağımlı olma.</span>
+      </h2>
+
+      <p>
+        ORYVEX CORE, uygulamaları tek bir sağlayıcıya kilitlemek yerine
+        servisleri ortak sözleşmeler ve kontrollü entegrasyon katmanları
+        üzerinden yönetmek üzere tasarlanır.
+      </p>
+
+      <div class="core-points">
+        <span>✓ Merkezi servis yönetimi</span>
+        <span>✓ Sağlık ve durum kontrolleri</span>
+        <span>✓ Yetki ve güvenlik katmanı</span>
+        <span>✓ Audit ve doğrulama</span>
+      </div>
+
+      <a class="btn btn-primary" href="https://core.oryvex.com.tr" target="_blank" rel="noopener">
+        ORYVEX CORE →
+      </a>
+
+    </div>
+
+    <div class="architecture reveal">
+
+      <div class="arch-node center-node">
+        <strong>ORYVEX</strong>
+        <span>CORE</span>
+      </div>
+
+      <div class="arch-node n1">GitHub</div>
+      <div class="arch-node n2">Cloud</div>
+      <div class="arch-node n3">Data</div>
+      <div class="arch-node n4">AI</div>
+      <div class="arch-node n5">API</div>
+      <div class="arch-node n6">Apps</div>
+
+      <div class="arch-ring ring-one"></div>
+      <div class="arch-ring ring-two"></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section section-dark" id="sectors">
+
+  <div class="container">
+
+    <div class="section-heading reveal">
+      <div class="eyebrow">SEKTÖRLER</div>
+      <h2>Tek teknoloji yaklaşımı. <span>Farklı operasyonlar.</span></h2>
+    </div>
+
+    <div class="sector-grid">
+      <article class="sector reveal"><span>01</span><h3>İnşaat</h3><p>Saha, maliyet, tedarik ve ilerleme yönetimi.</p></article>
+      <article class="sector reveal"><span>02</span><h3>E-Ticaret</h3><p>Ürün, kanal, sipariş ve stok operasyonları.</p></article>
+      <article class="sector reveal"><span>03</span><h3>Hizmet</h3><p>Müşteri, iş emri ve operasyon süreçleri.</p></article>
+      <article class="sector reveal"><span>04</span><h3>Perakende</h3><p>Satış, ürün ve operasyon entegrasyonu.</p></article>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section" id="about">
+
+  <div class="container about-grid">
+
+    <div class="section-heading reveal">
+      <div class="eyebrow">HAKKIMIZDA</div>
+      <h2>Dijital sistemi işletmenin <span>gerçek parçası</span> haline getiriyoruz.</h2>
+    </div>
+
+    <div class="about-text reveal">
+      <p>
+        ORYVEX; yazılımı tek başına bir ürün olarak değil,
+        işletmenin operasyon altyapısının parçası olarak ele alır.
+      </p>
+
+      <p>
+        Tasarım, geliştirme, entegrasyon, otomasyon ve kontrol
+        katmanlarını aynı mimari düşünce içinde birleştirerek
+        sürdürülebilir dijital sistemler oluşturur.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section contact-section" id="contact">
+
+  <div class="container contact-box reveal">
+
+    <div>
+      <div class="eyebrow">BİRLİKTE ÇALIŞALIM</div>
+      <h2>İşiniz için doğru sistemi birlikte kuralım.</h2>
+      <p>
+        Dijital dönüşüm, özel yazılım, otomasyon veya sistem
+        entegrasyonu için ORYVEX ile iletişime geçin.
+      </p>
+    </div>
+
+    <a class="btn btn-primary mail-button"
+       href="mailto:info@oryvex.com.tr?subject=ORYVEX%20Proje%20Talebi">
+       Projenizi Anlatın →
+    </a>
+
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+
+  <div class="container footer-grid">
+
+    <div>
+      <div class="footer-brand">ORYVE<span>X</span></div>
+      <p>DIJITAL SYSTEMS</p>
+    </div>
+
+    <div class="footer-links">
+      <a href="#solutions">Çözümler</a>
+      <a href="#systems">Sistemler</a>
+      <a href="#core">CORE</a>
+      <a href="#contact">İletişim</a>
+    </div>
+
+    <div class="footer-copy">
+      © <span id="year"></span> ORYVEX
+    </div>
+
+  </div>
+
+</footer>
+
+<script src="app.js"></script>
 </body>
 </html>
