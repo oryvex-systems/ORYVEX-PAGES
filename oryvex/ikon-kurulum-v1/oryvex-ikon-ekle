@@ -1,0 +1,54 @@
+#!/bin/bash
+set -euo pipefail
+TARGET="${1:-.}"
+if [ ! -d "$TARGET" ]; then echo 'HATA: Dizin bulunamadi'; exit 1; fi
+TARGET="$(cd "$TARGET" && pwd)"
+if [ ! -f "$TARGET/index.html" ]; then echo 'HATA: index.html yok. Statik HTML sitesi gerekli.'; exit 1; fi
+LOGDIR="$HOME/.oryvex/ikon-kurulum"; mkdir -p "$LOGDIR"
+LOG="$LOGDIR/$(date +%Y%m%d-%H%M%S).log"
+(
+ echo "ORYVEX IKON V1 | $TARGET"
+ export TARGET
+ python3 - <<'PY'
+from pathlib import Path
+from datetime import datetime
+import os, shutil, re
+root=Path(os.environ['TARGET'])
+files=[p for p in root.rglob('*.html') if not any(x in {'.git','node_modules','dist','.next','build','vendor'} for x in p.relative_to(root).parts)]
+if not files: raise SystemExit('HTML bulunamadi')
+backup=Path.home()/'.oryvex'/'ikon-yedekler'/root.name/datetime.now().strftime('%Y%m%d-%H%M%S')
+css=root/'assets'/'oryvex'/'oryvex-badge.css'
+css.parent.mkdir(parents=True,exist_ok=True)
+if css.exists():
+ b=backup/css.relative_to(root); b.parent.mkdir(parents=True,exist_ok=True); shutil.copy2(css,b)
+css.write_text('''/* ORYVEX ECOSYSTEM BADGE V1 */
+.oryvex-ecosystem-link{position:fixed;right:14px;top:88px;z-index:9999;display:flex;align-items:center;gap:8px;padding:8px 12px;background:#061226ee;color:#fff;border:1px solid #267ef4;border-radius:999px;text-decoration:none;font:700 11px/1.2 Arial,sans-serif;letter-spacing:.02em;box-shadow:0 6px 24px #0005}
+.oryvex-ecosystem-link img{width:30px;height:30px;object-fit:cover;border-radius:50%}
+.oryvex-ecosystem-link:hover{transform:translateY(-2px)}
+.oryvex-ecosystem-link:focus-visible{outline:3px solid #26c8ff;outline-offset:3px}
+@media(max-width:640px){.oryvex-ecosystem-link{top:72px;right:8px;padding:5px 8px;font-size:9px}.oryvex-ecosystem-link img{width:24px;height:24px}}
+''',encoding='utf-8')
+css_tag='<link data-oryvex-badge-css rel="stylesheet" href="/assets/oryvex/oryvex-badge.css">'
+badge='<a data-oryvex-badge class="oryvex-ecosystem-link" href="https://oryvex.com.tr/" target="_blank" rel="noopener noreferrer" aria-label="ORYVEX Dijital Sistemler web sitesini aç"><img src="https://oryvex.com.tr/assets/brand/oryvex-resmi-logo.png" alt="ORYVEX" loading="lazy"> <span>ORYVEX DİJİTAL SİSTEMLER</span></a>'
+changed=0
+for f in files:
+ s=f.read_text(encoding='utf-8')
+ if not re.search(r'</head\s*>',s,re.I) or not re.search(r'</body\s*>',s,re.I): continue
+ s=re.sub(r'<a\b[^>]*class=["\'][^"\']*\boryvex-link\b[^"\']*["\'][^>]*>.*?</a\s*>','',s,flags=re.I|re.S)
+ s=re.sub(r'<link\b[^>]*data-oryvex-badge-css[^>]*>','',s,flags=re.I)
+ s=re.sub(r'<a\b[^>]*data-oryvex-badge[^>]*>.*?</a\s*>','',s,flags=re.I|re.S)
+ rel=os.path.relpath(css.parent,f.parent).replace(os.sep,'/')+'/oryvex-badge.css'
+ tag=css_tag.replace('/assets/oryvex/oryvex-badge.css',rel)
+ s=re.sub(r'</head\s*>',tag+'\n</head>',s,count=1,flags=re.I)
+ s=re.sub(r'</body\s*>',badge+'\n</body>',s,count=1,flags=re.I)
+ old=f.read_text(encoding='utf-8')
+ if s!=old:
+  dest=backup/f.relative_to(root);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(f,dest)
+  f.write_text(s,encoding='utf-8');changed+=1
+print('Guncellenen HTML:',changed,'/ bulunan:',len(files))
+print('Yedek:',backup)
+print('Git commit/push otomatik yapilmadi; degisiklikleri kontrol edip yayinlayin.')
+PY
+) 2>&1 | tee "$LOG"
+pbcopy < "$LOG" 2>/dev/null || true
+echo "LOG: $LOG"
