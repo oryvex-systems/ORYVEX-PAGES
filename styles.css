@@ -435,3 +435,15 @@ footer{
   .footer-links{justify-content:flex-start;flex-wrap:wrap}
   .footer-copy{text-align:left}
 }
+
+/* ORYVEX V8 — official brand identity */
+.brand-official{width:62px;height:62px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 12px rgba(42,139,255,.35))}
+.hero-official-logo{position:relative;z-index:2;width:min(92%,470px);height:auto;object-fit:contain;filter:drop-shadow(0 0 28px rgba(49,92,255,.25));animation:float 5s ease-in-out infinite}
+.brand-story-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.brand-story-image{margin:0;min-width:0}.brand-story-image img{display:block;width:100%;height:auto;border-radius:20px;border:1px solid rgba(75,132,255,.2)}
+.brand-story-image figcaption{font-size:12px;color:var(--muted);text-align:center;margin-top:12px;letter-spacing:2px}
+.brand-pillars{display:grid;gap:12px}.brand-pillars article{display:flex;gap:20px;padding:18px 22px;background:rgba(9,23,48,.72);border:1px solid var(--line);border-radius:16px}
+.brand-pillars h3{margin:0 0 7px;font-size:20px}.brand-pillars p,.brand-conclusion{margin:0;color:var(--muted);line-height:1.65}
+.pillar-index{color:var(--cyan);font-weight:800;font-size:15px}.brand-conclusion{padding:14px 8px}
+@media(max-width:1100px){.brand-story-grid{grid-template-columns:1fr}.brand-official{width:52px;height:52px}}
+@media(max-width:800px){.brand-official{width:44px;height:44px}.hero-official-logo{width:min(85%,320px)}.brand-story-grid{gap:24px}.brand-pillars article{padding:16px}}
