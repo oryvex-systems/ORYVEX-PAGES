@@ -497,3 +497,24 @@ footer{
   .hero-visual{min-height:340px}
   .hero-official-logo{width:min(85%,320px)}
 }
+
+/* ORYVEX V8.2 — anchor offsets and official logo integration */
+html{scroll-padding-top:clamp(98px,9vw,132px)}
+section[id]{scroll-margin-top:clamp(98px,9vw,132px)}
+#top{scroll-margin-top:0}
+.hero-visual{
+  background:radial-gradient(circle at 50% 48%,rgba(15,35,84,.26),transparent 68%);
+}
+.hero-official-logo{
+  mix-blend-mode:lighten;
+  filter:drop-shadow(0 0 22px rgba(37,111,255,.2));
+  animation:none;
+  border-radius:14px;
+}
+@media(max-width:980px){
+  html{scroll-padding-top:94px}
+  section[id]{scroll-margin-top:94px}
+}
+@media(max-width:800px){
+  .hero-official-logo{max-width:100%;height:auto}
+}
